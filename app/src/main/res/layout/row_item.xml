@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:text="/"
         android:textSize="10sp"
+        app:layout_constraintEnd_toStartOf="@+id/calorieGoalTextView"
         app:layout_constraintStart_toEndOf="@+id/calorieNumberTextView"
         tools:layout_editor_absoluteY="38dp" />
 
