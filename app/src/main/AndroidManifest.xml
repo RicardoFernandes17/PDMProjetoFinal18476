@@ -23,14 +23,6 @@
                 android:value="" />
         </activity>
 
-        <activity
-            android:name=".shared.CommonActivity"
-            android:exported="false"
-            android:label="PDMProjetoFinal">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
 
         <service
             android:name=".FirebaseMessagingService"
@@ -73,16 +65,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="PDMProjetoFinal"
-            android:theme="@style/Theme.PDMProjetoFinal18476.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".AddRemoveCaloriesActivity"
-        android:label="PDMProjetoFinal"
-            android:exported="false"
-            android:theme="@style/Theme.PDMProjetoFinal18476.NoActionBar">
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

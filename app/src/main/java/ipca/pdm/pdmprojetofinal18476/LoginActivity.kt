@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import ipca.pdm.pdmprojetofinal18476.databinding.ActivityLoginBinding
+import ipca.pdm.pdmprojetofinal18476.helpers.getIntentWithoutHistory
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "Sucess")
                     Toast.makeText(baseContext, "Tá bom", Toast.LENGTH_SHORT).show()
                     startActivity(
-                        Intent(this@LoginActivity,
+                        getIntentWithoutHistory(this@LoginActivity,
                         MainActivity::class.java)
                     )
                 }

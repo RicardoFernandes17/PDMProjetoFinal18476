@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import ipca.pdm.pdmprojetofinal18476.helpers.getIntentWithoutHistory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,10 +33,11 @@ class SplashActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.Main) {
             delay(1000)
             val currentUser = Firebase.auth.currentUser
+            
             if(currentUser != null){
-                startActivity(Intent(this@SplashActivity,MainActivity::class.java))
+                startActivity(getIntentWithoutHistory(this@SplashActivity,MainActivity::class.java))
             }else{
-                startActivity(Intent(this@SplashActivity,LoginActivity::class.java))
+                startActivity(getIntentWithoutHistory(this@SplashActivity,LoginActivity::class.java))
             }
         }
     }
