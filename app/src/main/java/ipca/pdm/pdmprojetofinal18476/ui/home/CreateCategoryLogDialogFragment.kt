@@ -49,6 +49,11 @@ class CreateCategoryLogDialogFragment : DialogFragment() {
             dismiss()
         }
 
+        binding.addRemoveSwitch.setOnClickListener {
+            val switch : Boolean = binding.addRemoveSwitch.isChecked
+            binding.iconView.setImageDrawable(resources.getDrawable(if (switch) R.drawable.ic_baseline_sports_gymnastics_24 else R.drawable.ic_baseline_fastfood_24))
+        }
+
         binding.buttonAddCalorie.setOnClickListener {
             val qtd: Double = binding.editTextNumber.text.toString().toDouble()
             val isTraining: Boolean = binding.addRemoveSwitch.isChecked
@@ -102,7 +107,7 @@ class CreateCategoryLogDialogFragment : DialogFragment() {
 
             val result = "result"
 
-            parentFragmentManager.setFragmentResult("addCalLog", bundleOf("sucess" to result))
+            setFragmentResult("addCalLog", bundleOf("sucess" to result))
             dismiss()
         }
     }

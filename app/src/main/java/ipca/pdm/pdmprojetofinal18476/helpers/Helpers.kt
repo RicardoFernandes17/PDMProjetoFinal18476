@@ -93,10 +93,10 @@ fun editCurrentGoal(
                 val itemToUpdate = DailyCountElement.fromDoc(documents.first())
                 itemToUpdate.goal = goal
 
-                getCaloriesCollection(database, user).document(itemToUpdate.uid!!)
+                getCaloriesCollection(database, user).document(itemToUpdate.uid)
                     .update(itemToUpdate.toHashMap()).addOnSuccessListener {
 
-                    }.addOnFailureListener { e ->
+                    }.addOnFailureListener { _ ->
                         Toast.makeText(
                             activity, "Falha de conexão", Toast.LENGTH_SHORT
                         ).show()

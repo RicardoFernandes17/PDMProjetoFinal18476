@@ -96,7 +96,7 @@ class CalendarListFragment : Fragment() {
             calorieNumberTextView.text = "${items[position].counter}"
             calorieGoalTextView.text = "$burnedWithGoal"
 
-            val difference = (burnedWithGoal!! - items[position].counter!!).toInt()
+            val difference = (burnedWithGoal - items[position].counter!!).toInt()
 
             if (difference >= 0) {
                 if (items[position].date === today && difference >= 200 || items[position].date !== today) {

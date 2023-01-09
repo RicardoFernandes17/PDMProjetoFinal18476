@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_edit_settings"
     android:layout_width="match_parent"
-    android:minWidth="300dp"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:minWidth="300dp"
     tools:context=".ui.home.CreateCategoryLogDialogFragment">
 
         <EditText
             android:id="@+id/editTextNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="48dp"
             android:ems="10"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#3344D3"
+            android:backgroundTint="@color/secondary_200"
+            android:buttonTint="@color/secondary_200"
+            android:switchMinWidth="56dp"
             android:text="Treino"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="#3344D3"
+            android:backgroundTint="@color/secondary_200"
             android:text="Guardar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
@@ -51,9 +53,30 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Cancelar"
-            android:textColor="#3344D3"
+            android:textColor="@color/secondary_200"
             app:layout_constraintBottom_toBottomOf="@+id/buttonAddCalorie"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/buttonAddCalorie" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="kcal"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextNumber"
+            app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+            app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
+
+        <ImageView
+            android:id="@+id/iconView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/ic_baseline_fastfood_24"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextNumber"
+            app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
+            app:layout_constraintTop_toTopOf="@+id/editTextNumber"
+            app:tint="@color/secondary_200" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,6 +38,10 @@ class CurrentListFragment : Fragment() {
             var dialog = CreateCategoryLogDialogFragment()
 
             dialog.show(childFragmentManager, "customDialog")
+
+            dialog.setFragmentResultListener("addCalLog"){
+                requestKey, bundle ->  getCurrentElement()
+            }
         }
 
         return binding.root
@@ -48,10 +52,6 @@ class CurrentListFragment : Fragment() {
 
         getCurrentElement()
 
-        setFragmentResultListener("addCalLog") { _, bundle ->
-            Toast.makeText(activity, "RTeste", Toast.LENGTH_SHORT)
-            getCurrentElement()
-        }
     }
 
     private fun getCurrentElement() {
