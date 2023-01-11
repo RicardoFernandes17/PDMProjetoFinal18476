@@ -32,16 +32,18 @@ fun getSettingsCollection(database: FirebaseFirestore, user: FirebaseUser): Coll
     return database.collection("users").document(user.uid).collection("settings")
 }
 
-fun getCalorieDeficitGoal(database: FirebaseFirestore, user: FirebaseUser): Double {
-    var goal: Double = 2000.00
+fun getCalorieDeficitGoal(database: FirebaseFirestore, user: FirebaseUser , callback: (Double)->Unit ) {
+
+
     getSettingsCollection(database, user).get().addOnSuccessListener { documents ->
-            if (!documents.isEmpty) {
+        if (!documents.isEmpty) {
                 val item = UserDefinitionsElement.fromDoc(documents.first())
-                goal = item.goal!!;
+
+                callback.invoke(item.goal!!)
             }
         }
 
-    return goal
+
 }
 
 fun setDefaultDateValues(
@@ -68,19 +70,16 @@ fun setDefaultDateValues(
     return true
 }
 
-fun createDefaultItem(goal: Double = 2000.00): DailyCountElement {
-    val date: String = Date().toShort()
-
-    return DailyCountElement(0.00, goal, 0.00, date)
-}
-
 fun createEmptyCalorieLog(
-    database: FirebaseFirestore, user: FirebaseUser, activity: FragmentActivity
+    database: FirebaseFirestore, user: FirebaseUser, activity: FragmentActivity, callback: (DailyCountElement) -> Unit
 ) {
-    var goal: Double = getCalorieDeficitGoal(database, user)
-    var item: DailyCountElement = createDefaultItem(goal)
+    getCalorieDeficitGoal(database, user) {
+        val date: String = Date().toShort()
+        var item = DailyCountElement(0.00, it, 0.00, date)
+        setDefaultDateValues(item, database, user, activity)
+        callback.invoke(item)
+    }
 
-    setDefaultDateValues(item, database, user, activity)
 }
 
 fun editCurrentGoal(

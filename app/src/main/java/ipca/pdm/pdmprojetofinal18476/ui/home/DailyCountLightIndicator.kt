@@ -9,8 +9,6 @@ import android.view.View
 import ipca.pdm.pdmprojetofinal18476.helpers.LightIndicatorStatus
 
 class DailyCountLightIndicator : View {
-
-
     private var _status = LightIndicatorStatus.GOOD
     var status: LightIndicatorStatus
         get() {

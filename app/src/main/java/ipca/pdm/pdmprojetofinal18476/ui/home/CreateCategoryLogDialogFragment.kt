@@ -60,7 +60,7 @@ class CreateCategoryLogDialogFragment : DialogFragment() {
 
             val date: String = Date().toShort()
 
-            getCaloriesCollection(db, currentUser!!).whereEqualTo("date", date).get()
+            getCaloriesCollection(db, currentUser).whereEqualTo("date", date).get()
                 .addOnSuccessListener { documents ->
 
                     if (!documents.isEmpty) {
@@ -71,44 +71,51 @@ class CreateCategoryLogDialogFragment : DialogFragment() {
                             itemToUpdate.counter = (itemToUpdate.counter ?: 0.00) + qtd
 
 
-                        getCaloriesCollection(db, currentUser!!).document(itemToUpdate.uid!!)
+                        getCaloriesCollection(db, currentUser).document(itemToUpdate.uid)
                             .update(itemToUpdate.toHashMap())
-                            .addOnSuccessListener { documentReference ->
+                            .addOnSuccessListener { _ ->
                                 Log.d(
                                     "CategoryLog",
                                     "DocumentSnapshot updated with ID: ${itemToUpdate.uid}"
                                 )
+                                setFragmentResult("addCalLog", bundleOf("sucess" to "result"))
+                                dismiss()
                             }.addOnFailureListener { e ->
                                 onCreateEditError(e)
+                                dismiss()
                             }
 
                     } else {
-                        val item =
-                            DailyCountElement(
-                                if (isTraining) qtd else 0.00,
-                                getCalorieDeficitGoal(db, currentUser),
-                                if (isTraining) 0.00 else qtd,
-                                date
-                            )
 
-                        getCaloriesCollection(db, currentUser!!).add(item.toHashMap())
-                            .addOnSuccessListener { documentReference ->
-                                Log.d(
-                                    "CategoryLog",
-                                    "DocumentSnapshot written with ID: ${documentReference.id}"
+                        getCalorieDeficitGoal(db,currentUser){
+                            val item =
+                                DailyCountElement(
+                                    if (isTraining) qtd else 0.00,
+                                    it,
+                                    if (isTraining) 0.00 else qtd,
+                                    date
                                 )
 
-                            }.addOnFailureListener { e ->
-                                onCreateEditError(e)
-                            }
+                            getCaloriesCollection(db, currentUser).add(item.toHashMap())
+                                .addOnSuccessListener { documentReference ->
+                                    Log.d(
+                                        "CategoryLog",
+                                        "DocumentSnapshot written with ID: ${documentReference.id}"
+                                    )
+                                    setFragmentResult("addCalLog", bundleOf("sucess" to "result"))
+                                    dismiss()
+                                }.addOnFailureListener { e ->
+                                    onCreateEditError(e)
+                                    dismiss()
+                                }
+                        }
+
                     }
 
                 }
 
-            val result = "result"
 
-            setFragmentResult("addCalLog", bundleOf("sucess" to result))
-            dismiss()
+
         }
     }
 
