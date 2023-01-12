@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else{
                     Log.w(TAG, "Error")
-                    Toast.makeText(baseContext, "Tá mal", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Email ou password errados.", Toast.LENGTH_SHORT).show()
                 }
             }
 

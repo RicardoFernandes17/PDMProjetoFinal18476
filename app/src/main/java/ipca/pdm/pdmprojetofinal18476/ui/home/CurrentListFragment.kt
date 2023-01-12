@@ -39,8 +39,8 @@ class CurrentListFragment : Fragment() {
 
             dialog.show(childFragmentManager, "customDialog")
 
-            dialog.setFragmentResultListener("addCalLog"){
-                requestKey, bundle ->  getCurrentElement()
+            dialog.setFragmentResultListener("addCalLog") { requestKey, bundle ->
+                getCurrentElement()
             }
         }
 
@@ -59,26 +59,31 @@ class CurrentListFragment : Fragment() {
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
                     val item = DailyCountElement.fromDoc(documents.first())
-
-                    val burnedWithGoal = item.goal!! + item.burned!!
-                    val difference: Int = (burnedWithGoal!! - item?.counter!!).toInt()
-                    val percentage: Int = ((item.counter!! / burnedWithGoal!!) * 100.00).toInt()
-
-                    binding.textViewConsumedCalories.text = item.counter.toString()
-                    binding.textViewTotalCalories.text = burnedWithGoal.toString()
-                    binding.textViewDeficit.text = difference.toString()
-                    binding.textViewPercentage.text  = "${percentage}%"
-                    binding.progressBar.progress = percentage
-
-                    if (percentage >= 100) binding.textViewPercentage.setTextColor(Color.RED)
-                    binding.textViewDeficit.setTextColor(if (difference >= 200) Color.GREEN else if (difference >= 0) Color.YELLOW else Color.RED)
-
+                    setInfoValue(item)
                 } else {
-                    createEmptyCalorieLog(db, currentUser, requireActivity())
+                    createEmptyCalorieLog(db, currentUser, requireActivity()) { item ->
+                        setInfoValue(item)
+                    }
                 }
 
             }
 
     }
 
+
+    private fun setInfoValue(item: DailyCountElement) {
+        val burnedWithGoal = item.goal!! + item.burned!!
+        val difference: Int = (burnedWithGoal - item.counter!!).toInt()
+        val percentage: Int = ((item.counter!! / burnedWithGoal) * 100.00).toInt()
+
+        binding.textViewConsumedCalories.text = item.counter.toString()
+        binding.textViewTotalCalories.text = burnedWithGoal.toString()
+        binding.textViewDeficit.text = difference.toString()
+        binding.textViewPercentage.text = "${percentage}%"
+        binding.progressBar.progress = percentage
+
+        if (percentage >= 100) binding.textViewPercentage.setTextColor(Color.RED)
+        binding.textViewDeficit.setTextColor(if (difference >= 200) Color.GREEN else if (difference >= 0) Color.YELLOW else Color.RED)
+
+    }
 }

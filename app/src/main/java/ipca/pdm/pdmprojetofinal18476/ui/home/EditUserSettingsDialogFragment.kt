@@ -39,22 +39,18 @@ class EditUserSettingsDialogFragment : DialogFragment() {
 
         getSettingsCollection(db, currentUser).get()
             .addOnSuccessListener { documents ->
-
                 if (!documents.isEmpty) {
                     val item = UserDefinitionsElement.fromDoc(documents.first())
-
                     binding.editTextNumber.setText("${item.goal}")
                 } else {
                     val item = UserDefinitionsElement(2000.00)
-
                     getSettingsCollection(db, currentUser)
                         .add(item.toHashMap()).addOnSuccessListener {
                             binding.editTextNumber.setText("${item.goal}")
-                        }.addOnFailureListener { e ->
+                        }.addOnFailureListener { _ ->
                             Toast.makeText(
                                 activity, "Falha de conexão", Toast.LENGTH_SHORT
                             ).show()
-
                             dismiss()
                         }
                 }
@@ -63,17 +59,17 @@ class EditUserSettingsDialogFragment : DialogFragment() {
         binding.buttonAddCalorie.setOnClickListener {
             getSettingsCollection(db, currentUser).get()
                 .addOnSuccessListener { documents ->
-
                     val goal = binding.editTextNumber.text.toString().toDouble()
                     if (!documents.isEmpty) {
                         val itemToUpdate = UserDefinitionsElement.fromDoc(documents.first())
                         itemToUpdate.goal = goal
 
                         getSettingsCollection(db, currentUser)
-                            .document(itemToUpdate.uid!!).update(itemToUpdate.toHashMap())
+                            .document(itemToUpdate.uid).update(itemToUpdate.toHashMap())
                             .addOnSuccessListener {
+                                editCurrentGoal(goal,db, currentUser, activity)
                                 dismiss()
-                            }.addOnFailureListener { e ->
+                            }.addOnFailureListener { _ ->
                                 Toast.makeText(
                                     activity, "Falha de conexão", Toast.LENGTH_SHORT
                                 ).show()
@@ -81,14 +77,14 @@ class EditUserSettingsDialogFragment : DialogFragment() {
                             }
 
                     } else {
-
                         val item = UserDefinitionsElement(goal)
 
                         getSettingsCollection(db, currentUser )
-                            .add(item.toHashMap()).addOnSuccessListener { document ->
+                            .add(item.toHashMap()).addOnSuccessListener { _ ->
+                                editCurrentGoal(goal,db, currentUser, activity)
                                 dismiss()
 
-                            }.addOnFailureListener { e ->
+                            }.addOnFailureListener { _ ->
                                 Toast.makeText(
                                     activity, "Falha de conexão", Toast.LENGTH_SHORT
                                 ).show()
@@ -96,10 +92,8 @@ class EditUserSettingsDialogFragment : DialogFragment() {
                             }
                     }
 
-                    editCurrentGoal(goal,db, currentUser, activity)
 
                 }
-            dismiss()
         }
     }
 }
